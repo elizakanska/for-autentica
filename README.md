@@ -24,3 +24,6 @@ password: `admin`
 The dummy user password is `password`
 
 You can create and access your own test user, if you don't feel like using a dummy account!
+
+
+I accidentally forgot to make the github repo first and ended up struggling with git later. All the files were manually uploaded as a result, since I couldn't get git to ignore certain classes and folders. I am being up-front about this because this was a serious oversight and this was the first time ignoring the order of repo->local development burnt me this hard, this will never happen again.
