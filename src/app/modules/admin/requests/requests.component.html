@@ -1,0 +1,96 @@
+<div class="container">
+  <h2>Requests Dashboard</h2>
+  <button (click)="openRequestForm()" class="btn btn-primary">Add New Request</button>
+
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Search requests by username"
+    class="search-bar"
+    (input)="searchRequests()"/>
+
+  <!-- Loading Spinner -->
+  <ngx-spinner *ngIf="loading" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+    <p style="color: white;">Loading requests...</p>
+  </ngx-spinner>
+
+  <!-- Table is only displayed when loading is false -->
+  <table class="table" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Hardware</th>
+        <th>Parameters</th>
+        <th>Justification</th>
+        <th>Date and Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of filteredRequests; trackBy: trackByRequestId">
+        <td>{{ request.user?.name || 'Unknown' }}</td>
+        <td>{{ request.hardwareType }}</td>
+        <td>{{ request.parameters }}</td>
+        <td>{{ request.justification }}</td>
+        <td>{{ formatDate(request.requestTime) }}</td>
+        <td>{{ request.status }}</td>
+        <td class="buttons">
+          <button (click)="editRequest(request)" class="btn btn-warning">Edit</button>
+          <button (click)="deleteRequest(request.id)" class="btn btn-danger">Delete</button>
+          <button *ngIf="request.status === 'PENDING'" (click)="accept(request.id)" class="btn btn-success">Approve</button>
+          <button *ngIf="request.status === 'PENDING'" (click)="deny(request.id)" class="btn btn-danger">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal" [ngClass]="{ 'is-visible': showRequestForm }">
+    <div class="modal-content custom-form">
+      <form nz-form [formGroup]="requestFormGroup" (ngSubmit)="saveRequest()">
+        <h3>{{ editingRequest ? 'Edit Request' : 'Add Request' }}</h3>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Invalid hardware!">
+            <nz-select formControlName="hardwareType" nzPlaceHolder="Select Hardware">
+              <nz-option nzValue="LAPTOP" nzLabel="Laptop"></nz-option>
+              <nz-option nzValue="MONITOR" nzLabel="Monitor"></nz-option>
+              <nz-option nzValue="KEYBOARD" nzLabel="Keyboard"></nz-option>
+              <nz-option nzValue="MOUSE" nzLabel="Mouse"></nz-option>
+              <nz-option nzValue="OTHER" nzLabel="Other"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Invalid justification!">
+            <input nz-input placeholder="Justification" formControlName="justification"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Invalid parameters!">
+            <input nz-input placeholder="Parameters" formControlName="parameters"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Invalid status!">
+            <nz-select formControlName="status" nzPlaceHolder="Select Status">
+              <nz-option nzValue="PENDING" nzLabel="Pending"></nz-option>
+              <nz-option nzValue="REJECTED" nzLabel="Rejected"></nz-option>
+              <nz-option nzValue="APPROVED" nzLabel="Approved"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+          {{ editingRequest ? 'Update' : 'Create' }}
+        </button>
+        <button nz-button class="login-form-button login-form-margin" (click)="closeRequestForm()" nzType="default">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

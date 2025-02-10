@@ -1,0 +1,26 @@
+<div class="modal-content custom-form">
+    <form nz-form [formGroup]="userFormGroup" (ngSubmit)="saveUser()">
+      <h3>Edit Profile</h3>
+      <nz-form-item>
+        <nz-form-control nzHasFeedback nzErrorTip="Invalid name!">
+          <input nz-input placeholder="Name" formControlName="name"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzHasFeedback nzErrorTip="Invalid e-mail!">
+          <input nz-input placeholder="email@mail.com" formControlName="email"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzHasFeedback nzErrorTip="Invalid password!">
+          <input nz-input placeholder="password" formControlName="password"/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+        Update
+      </button>
+    </form>
+  </div>

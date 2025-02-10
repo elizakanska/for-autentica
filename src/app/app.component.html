@@ -1,0 +1,51 @@
+<nz-layout>
+  <nz-sider nzCollapsible="200px">
+    <img src="logo.png" alt="Kitty" class="logo">
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <div *ngIf="!isUser && !isAdmin">
+        <li nz-menu-item routerLink="/register">
+          <span nz-icon nzType="user"></span>
+          <span><strong>Register</strong></span>
+        </li>
+        <li nz-menu-item routerLink="/login">
+          <span nz-icon nzType="login"></span>
+          <span><strong>Login</strong></span>
+        </li>
+      </div>
+      <div *ngIf="isAdmin">
+        <li nz-menu-item routerLink="/admin/requests">
+          <span nz-icon nzType="edit"></span>
+          <span><strong>Requests</strong></span>
+        </li>
+        <li nz-menu-item routerLink="/admin/dashboard">
+          <span nz-icon nzType="user"></span>
+          <span><strong>Users</strong></span>
+        </li>
+        <li nz-menu-item (click)="logout()">
+          <span nz-icon nzType="logout"></span>
+          <span><strong>Logout</strong></span>
+        </li>
+      </div>
+      <div *ngIf="isUser">
+        <li nz-menu-item routerLink="/user/requests">
+          <span nz-icon nzType="form"></span>
+          <span><strong>My Requests</strong></span>
+        </li>
+        <li nz-menu-item routerLink="/user/profile">
+          <span nz-icon nzType="user"></span>
+          <span><strong>My Profile</strong></span>
+        </li>
+        <li nz-menu-item (click)="logout()">
+          <span nz-icon nzType="logout"></span>
+          <span><strong>Logout</strong></span>
+        </li>
+      </div>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer><h2>© 2025 - Elīza Kanska</h2></nz-footer>
+  </nz-layout>
+</nz-layout>

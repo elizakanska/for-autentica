@@ -1,0 +1,19 @@
+<div class="center-form">
+    <form nz-form [formGroup]="loginForm" class="custom-form" (ngSubmit)="submitForm()">
+        <h2>Login</h2>
+        <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Please enter a valid e-mail!">
+                <input nz-input placeholder="email@mail.com" formControlName="email"/>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Please enter a valid password!">
+                <input nz-input placeholder="password" type="password" formControlName="password"/>
+            </nz-form-control>
+        </nz-form-item>
+        
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Login</button>
+        Or <a routerLink="/register">register now!</a>
+    </form>
+</div>
